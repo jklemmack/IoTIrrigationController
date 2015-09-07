@@ -171,7 +171,6 @@ namespace IoTIrrigationController
             return sensorData;
         }
 
-
         XBeeSensorData ProcessSensorData(XBeeSensorData sensor, UInt16 channelMask, ref int pos, byte[] data)
         {
             const UInt16 DIGITAL_MASK = 0x1F;
@@ -207,7 +206,6 @@ namespace IoTIrrigationController
 
     static class MemoryStreamExtensions
     {
-
 
         public static bool ReadUInt16(this Stream stream, ref UInt16 value)
         {
