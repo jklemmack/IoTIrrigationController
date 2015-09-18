@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace IrrigationController.Model
 {
-    public class SensorRequest : QueryBase<Sensor>
+    //public class SensorRequest : QueryBase<Sensor>
+    //{
+    //    public string Id { get; set; }
+    //}
+
+    [Route("/sensorreadings", "GET")]
+    public class GetSensorReadingsRequest
     {
-        public string Id { get; set; }
     }
 }

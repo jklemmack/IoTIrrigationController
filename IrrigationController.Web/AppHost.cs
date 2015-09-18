@@ -5,6 +5,7 @@ using System.Web;
 using Funq;
 using ServiceStack;
 using IrrigationController.ServiceInterface;
+using ServiceStack.Caching;
 
 namespace IrrigationController.Web
 {
@@ -20,7 +21,19 @@ namespace IrrigationController.Web
         {
             Plugins.Add(new ServerEventsFeature()
             {
+                HeartbeatInterval = new TimeSpan(0, 1, 0)
             });
+
+            container.Register<ICacheClient>(new MemoryCacheClient());
+
+            ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            ServiceStack.Text.JsConfig.DateHandler = ServiceStack.Text.DateHandler.ISO8601;
+
+            HostConfig hostConfig = new HostConfig()
+            {
+                ReturnsInnerException = true
+            };
+            SetConfig(hostConfig);
 
         }
     }

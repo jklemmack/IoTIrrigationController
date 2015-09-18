@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="IotCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="IrrigationController.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=irrigationcontroller;AccountKey=1Uiuz0HVCv53EqzesZ2cpGa2W/7nG6HBsXmXHmisC4qc3Qj6P27ilkM5ZdD+gdFf2dimbTAXV45WfcLgNOw8/A==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
