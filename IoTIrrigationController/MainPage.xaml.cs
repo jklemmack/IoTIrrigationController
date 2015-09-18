@@ -53,27 +53,9 @@ namespace IoTIrrigationController
 
             string baseUri = "http://irrigationcontroller.azurewebsites.net/";
             client = new JsonServiceClient(baseUri);
-            seClient = new ServerEventsClient(baseUri, "relay")
-            {
-                OnConnect = e =>
-                {
-                    connectMsg = e;
-                },
-                OnCommand = e =>
-                {
-                    commands.Add(e);
-                },
-                OnMessage = e =>
-                {
-                    msgs.Add(e);
-                },
-                OnException = e =>
-                {
-                    errors.Add(e);
-                }
-            }
-            ;
-            seClient.Handlers["ZoneControl"] = HandleRelayCommand;
+            seClient = new ServerEventsClient(baseUri, "relay");
+            seClient.OnMessage = HandleRelayCommand;
+
             seClient.Start();
 
             InitGPIO();
@@ -181,9 +163,20 @@ namespace IoTIrrigationController
 
         }
 
-        private void HandleRelayCommand(ServerEventsClient client, ServerEventMessage msg)
+        private void HandleRelayCommand(ServerEventMessage msg)
         {
+            if (msg.Target == "ZoneControl")
+            {
+                var zc = msg.Json.FromJson<ZoneControl>();
+                SetRelay((zc.RelayOn) ? GpioPinValue.High : GpioPinValue.Low);
+            }
+        }
 
+        private void SetRelay(GpioPinValue value)
+        {
+            if (relayPin == null) return;
+
+            relayPin.Write(value);
         }
     }
 }
